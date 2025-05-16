@@ -1,0 +1,106 @@
+I need a complete backend service for my image extraction website that can extract and handle ALL image formats and sources from any website. Please provide detailed implementation for:
+
+1. Create a robust Express.js backend with these endpoints:
+   - POST /api/extract: Extracts all images from a given URL
+   - GET /api/proxy: Serves as an image proxy to bypass CORS
+   - GET /api/health: Simple health check endpoint
+
+2. Implement comprehensive image format detection and extraction:
+   - Explicitly handle ALL these image formats:
+     * JPEG/JPG (image/jpeg)
+     * PNG (image/png)
+     * GIF (image/gif)
+     * WebP (image/webp)
+     * SVG (image/svg+xml)
+     * AVIF (image/avif)
+     * BMP (image/bmp)
+     * ICO (image/x-icon)
+     * TIFF (image/tiff)
+     * HEIC/HEIF (image/heic, image/heif)
+   - Include proper MIME type detection for each format
+   - Implement format-specific metadata extraction where possible
+   - Add file extension detection from URLs and content types
+
+3. Create a thorough Puppeteer-based extraction service:
+   - Extract images from ALL possible sources:
+     ```javascript
+     // Example extraction function structure
+     async function extractAllImages(page) {
+       // Standard image tags with any extension
+       const imgTags = await page.evaluate(() => {
+         return Array.from(document.querySelectorAll('img'))
+           .map(img => ({
+             src: img.src,
+             alt: img.alt,
+             width: img.width,
+             height: img.height
+           }))
+           .filter(img => img.src);
+       });
+       
+       // Background images from CSS
+       const backgroundImages = await page.evaluate(() => {
+         // Implementation that gets ALL elements with background-image
+       });
+       
+       // SVG images (both tags and background)
+       const svgImages = await page.evaluate(() => {
+         // Implementation
+       });
+       
+       // Picture elements with source tags
+       const pictureImages = await page.evaluate(() => {
+         // Implementation
+       });
+       
+       // Parse srcset attributes properly
+       // Extract CSS @import and linked stylesheets for images
+       // Canvas elements with image data
+       
+       return [...imgTags, ...backgroundImages, ...svgImages, ...pictureImages];
+     }
+     ```
+   - Implement format-specific handling for each image type
+   - Use content-type headers and magic bytes for verification
+   - Handle special cases like data URIs and convert them if needed
+
+4. Build a robust image proxy service:
+   - Support ALL image formats in the proxy service
+   - Properly handle binary data streaming:
+     ```javascript
+     app.get('/api/proxy', async (req, res) => {
+       try {
+         const imageUrl = decodeURIComponent(req.query.url);
+         // Validate URL
+         
+         const response = await axios({
+           method: 'get',
+           url: imageUrl,
+           responseType: 'stream',
+           headers: {
+             // Appropriate headers
+           },
+           timeout: 15000 // 15 second timeout
+         });
+         
+         // Forward the exact content-type from the original response
+         res.set('Content-Type', response.headers['content-type']);
+         // Add proper cache headers
+         res.set('Cache-Control', 'public, max-age=86400');
+         // Forward the image data as a stream
+         response.data.pipe(res);
+       } catch (error) {
+         // Detailed error handling by error type
+       }
+     });
+     ```
+   - Include format validation and sanitation
+   - Add caching for improved performance
+
+5. Error handling and logging:
+   - Create detailed error classes for different failure types
+   - Implement logging for debugging
+   - Add format-specific error handling
+   - Provide meaningful error responses to the client
+
+Please provide complete, production-ready code for this backend service with thorough error handling and comments explaining each part. Include clear instructions for deployment and testing with examples for extracting images from various websites and handling different formats.

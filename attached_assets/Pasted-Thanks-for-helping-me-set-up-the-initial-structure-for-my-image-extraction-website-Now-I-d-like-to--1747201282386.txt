@@ -1,0 +1,34 @@
+Thanks for helping me set up the initial structure for my image extraction website. Now I'd like to implement the core functionality for extracting and displaying images. Please help me with:
+
+1. Image extraction service:
+   - Implement a robust backend service using Puppeteer that can extract images from URLs, including dynamically loaded content
+   - Add error handling for various scenarios (CORS issues, timeouts, blocked requests)
+   - Implement rate limiting to avoid overwhelming target websites
+   - Extract image metadata (dimensions, size, format) when possible
+
+2. Image gallery component:
+   - Create a responsive grid layout for displaying extracted images
+   - Implement image thumbnails with lazy loading for performance
+   - Add checkboxes for selecting/deselecting images
+   - Include "Select All" and "Deselect All" options
+   - Show a counter for number of images found and selected
+
+3. Download functionality:
+   - Implement client-side ZIP creation using JSZip for selected images
+   - Add a download button that generates a ZIP of selected images
+   - Include progress indicators for both extraction and download processes
+   - Offer options to download individual images
+
+4. Advanced features:
+   - Add filtering options (by image size, dimensions, format)
+   - Implement image preview on click
+   - Add copy-to-clipboard functionality for image URLs
+   - Create a history section to recall recently processed URLs (using localStorage)
+
+5. Performance and security:
+   - Implement proper caching strategies for extracted images
+   - Set up temporary storage with automatic cleanup
+   - Add appropriate headers for security
+   - Implement timeout handling for slow-loading websites
+
+Please provide clean, modular code with appropriate error handling, and ensure the UI remains responsive throughout the extraction and download processes. Include comments explaining any complex logic, especially around the Puppeteer implementation and ZIP file creation.
